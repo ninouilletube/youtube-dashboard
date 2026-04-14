@@ -138,8 +138,7 @@ if st.session_state.youtube is None:
             st.link_button("Se connecter avec Google", auth_url)
         else:
             flow.fetch_token(
-                code=st.query_params['code'],
-                redirect_uri=st.secrets["REDIRECT_URI"]
+                authorization_response=f"{st.secrets['REDIRECT_URI']}?code={st.query_params['code']}&state={st.query_params['state']}"
             )
             creds = flow.credentials
             st.session_state.youtube = build('youtube', 'v3', credentials=creds)
